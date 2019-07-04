@@ -1,0 +1,4 @@
+.eslintrc.json
+*.md
+script/
+test/

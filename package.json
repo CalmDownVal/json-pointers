@@ -1,0 +1,30 @@
+{
+	"name": "@calmdownval/json-pointers",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "src/index.mjs",
+	"typings": "src/index.d.ts",
+	"license": "GPL-3.0-or-later",
+	"description": "JSON pointers implementation",
+	"keywords": [
+		"JSON",
+		"pointer",
+		"absolute",
+		"relative"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vaclavlahuta/json-pointers.git"
+	},
+	"engines": {
+		"node": ">=8.15.0"
+	},
+	"devDependencies": {
+		"cross-env": "^5.2.0",
+		"glob": "^7.1.4",
+		"mocha": "^6.1.4"
+	},
+	"scripts": {
+		"test": "cross-env NODE_OPTIONS=\"--experimental-modules\" mocha --delay script/test.esm.js"
+	}
+}
