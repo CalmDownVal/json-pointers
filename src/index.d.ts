@@ -1,20 +1,19 @@
-namespace JSONPointers
+declare namespace JSONPointers
 {
 	export class AbsolutePointer
 	{
-		constructor(path: (string|number)[], baseURI?: string)
+		constructor(path: (string | number)[])
 
 		unref(root: any): any
 		getRelativeTo(pointer: AbsolutePointer): RelativePointer
 		toString(): string
-		toURI(): string
 
 		static parse(str: string): AbsolutePointer
 	}
 
 	export class RelativePointer
 	{
-		constructor(path: (string|number)[], baseURI?: string)
+		constructor(stepsBack: number, path: (string | number)[])
 
 		unref(origin: AbsolutePointer, root: any): any;
 		getAbsoluteFrom(pointer: AbsolutePointer): AbsolutePointer
@@ -22,6 +21,9 @@ namespace JSONPointers
 
 		static parse(str: string): RelativePointer
 	}
+
+	export function escape(str: string): string
+	export function unescape(str: string): string
 }
 
 export = JSONPointers;

@@ -12,7 +12,12 @@ const unescapeMap =
 	'1' : '/'
 };
 
-function escape(str)
+/**
+ * tilda-escapes the string
+ * @param {string} str string to escape
+ * @returns {string} the escaped string
+ */
+export function escape(str)
 {
 	const length = str.length;
 
@@ -41,7 +46,13 @@ function escape(str)
 		: result + str.slice(anchor);
 }
 
-function unescape(str)
+/**
+ * unescapes a tilda-escaped string
+ * @param {string} str string to unescape
+ * @returns {string} the unescaped string
+ * @throws Will throw on invalid tilda-escape sequence
+ */
+export function unescape(str)
 {
 	const length = str.length;
 
