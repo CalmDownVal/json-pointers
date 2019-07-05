@@ -13,7 +13,6 @@ npm i --save @calmdownval/json-pointers
 - relative pointers support referencing of array indexes and object keys
 - parse and toString methods provided
 - escapes and unescapes tilda sequences (`~0`, `~1`)
-- respects baseURI of absolute pointers
 - can convert between absolute and relative pointers
 - includes tests
 
@@ -40,9 +39,6 @@ ptr1.unref(object); // returns 'ipsum'
 
 // regular stringify
 ptr0.toString(); // returns '/some/nested/stuff/1'
-
-// or as a URI (only for AbsolutePointer)
-ptr1.toURI(); // returns '#/some/nested/lorem'
 
 // get a relative pointer between ptr0 and ptr1
 ptr0.getRelativeTo(ptr1); // returns an instance of RelativePointer '2/lorem'

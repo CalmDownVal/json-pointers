@@ -76,7 +76,7 @@ export default class RelativePointer
 			path[offset + i] = this.path[i];
 		}
 
-		return new AbsolutePointer(path, origin.baseURI);
+		return new AbsolutePointer(path);
 	}
 
 	/**
@@ -113,6 +113,6 @@ export default class RelativePointer
 
 		return new RelativePointer(
 			Number(str.slice(0, index)),
-			charCode === 47 ? parse(str, index) : null);
+			charCode === 35 ? null : parse(str, index));
 	}
 }
