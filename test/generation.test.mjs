@@ -12,13 +12,6 @@ describe('generation - AbsolutePointer', () =>
 		strictEqual(ptr.stepsBack, 3);
 		deepStrictEqual(ptr.path, [ 'x', 'y' ]);
 	});
-
-	it('should throw when unresolvable', () =>
-	{
-		const source = new AbsolutePointer([], 'org1.com');
-		const dest = new AbsolutePointer([], 'org2.com');
-		throws(() => source.getRelativeTo(dest));
-	});
 });
 
 describe('generation - RelativePointer', () =>
