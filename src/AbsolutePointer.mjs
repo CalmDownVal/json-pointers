@@ -58,15 +58,16 @@ export default class AbsolutePointer
 	/**
 	 * Parses a string as an absolute JSON pointer into a new instance of AbsolutePointer.
 	 * @param {string} str the string to parse
+	 * @param {boolean} decodeURI whether to decode URI encoding
 	 * @returns {AbsolutePointer} the parsed pointer
 	 * @throws Will throw if the string is not a valid absolute JSON pointer.
 	 */
-	static parse(str)
+	static parse(str, decodeURI = false)
 	{
 		if (str && str[0] !== '/')
 		{
 			throw new Error('input string is in invalid format');
 		}
-		return new AbsolutePointer(parse(str));
+		return new AbsolutePointer(parse(str, 0, decodeURI));
 	}
 }

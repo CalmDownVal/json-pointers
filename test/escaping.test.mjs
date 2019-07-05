@@ -1,34 +1,44 @@
 /* eslint-env mocha */
 import { strictEqual, throws } from 'assert';
-import { escape, unescape } from '../src/index.mjs';
+import { encode, decode } from '../src/index.mjs';
 
-describe('escape', () =>
+describe('encode', () =>
 {
 	it('should leave regular strings intact', () =>
 	{
-		strictEqual(escape('foo bar'), 'foo bar');
+		strictEqual(encode('foo bar'), 'foo bar');
 	});
 
-	it('should escape ~ and /', () =>
+	it('should encode ~ and /', () =>
 	{
-		strictEqual(escape('foo~bar/baz'), 'foo~0bar~1baz');
+		strictEqual(encode('foo~bar/baz'), 'foo~0bar~1baz');
 	});
 });
 
-describe('unescape', () =>
+describe('decode', () =>
 {
 	it('should leave regular strings intact', () =>
 	{
-		strictEqual(unescape('foo bar'), 'foo bar');
+		strictEqual(decode('foo bar'), 'foo bar');
 	});
 
-	it('should escape ~ and /', () =>
+	it('should decode ~ and /', () =>
 	{
-		strictEqual(unescape('foo~0bar~1baz'), 'foo~bar/baz');
+		strictEqual(decode('foo~0bar~1baz'), 'foo~bar/baz');
+	});
+
+	it('should ignore URL encoded groups', () =>
+	{
+		strictEqual(decode('foo%20baz+bar'), 'foo%20baz+bar');
+	});
+
+	it('should decode URL encoded groups when explicitly enabled', () =>
+	{
+		strictEqual(decode('foo%20baz+bar', true), 'foo baz bar');
 	});
 
 	it('should throw on invalid sequences', () =>
 	{
-		throws(() => unescape('foo~2bar'));
+		throws(() => decode('foo~2bar'));
 	});
 });

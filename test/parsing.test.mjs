@@ -22,7 +22,7 @@ describe('string operations - AbsolutePointer', () =>
 		deepStrictEqual(ptr.path, [ 'a', 42, 'c' ]);
 	});
 
-	it('should unescape tildas', () =>
+	it('should decode tildas', () =>
 	{
 		const ptr = AbsolutePointer.parse('/some~0fancy~1stuff');
 		deepStrictEqual(ptr.path, [ 'some~fancy/stuff' ]);
@@ -45,7 +45,7 @@ describe('string operations - AbsolutePointer', () =>
 		strictEqual(ptr.toString(), '');
 	});
 
-	it('should stringify with tilda escaping', () =>
+	it('should stringify with tilda encoding', () =>
 	{
 		const ptr = new AbsolutePointer([ 'x~y', 13, 'a/b' ]);
 		strictEqual(ptr.toString(), '/x~0y/13/a~1b');
@@ -82,7 +82,7 @@ describe('string operations - RelativePointer', () =>
 		deepStrictEqual(ptr.path, [ 'a', 42, 'c' ]);
 	});
 
-	it('should unescape tildas', () =>
+	it('should decode tildas', () =>
 	{
 		const ptr = RelativePointer.parse('42/some~0fancy~1stuff');
 		deepStrictEqual(ptr.path, [ 'some~fancy/stuff' ]);
@@ -111,7 +111,7 @@ describe('string operations - RelativePointer', () =>
 		strictEqual(ptr.toString(), '42/a/b/c');
 	});
 
-	it('should stringify with tilda escaping', () =>
+	it('should stringify with tilda encoding', () =>
 	{
 		const ptr = new RelativePointer(42, [ 'x~y', 13, 'a/b' ]);
 		strictEqual(ptr.toString(), '42/x~0y/13/a~1b');

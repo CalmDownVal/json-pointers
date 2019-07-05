@@ -8,7 +8,7 @@ declare namespace JSONPointers
 		getRelativeTo(pointer: AbsolutePointer): RelativePointer
 		toString(): string
 
-		static parse(str: string): AbsolutePointer
+		static parse(str: string, decodeURI?: boolean): AbsolutePointer
 	}
 
 	export class RelativePointer
@@ -19,11 +19,11 @@ declare namespace JSONPointers
 		getAbsoluteFrom(pointer: AbsolutePointer): AbsolutePointer
 		toString(): string
 
-		static parse(str: string): RelativePointer
+		static parse(str: string, decodeURI?: boolean): RelativePointer
 	}
 
-	export function escape(str: string): string
-	export function unescape(str: string): string
+	export function encode(str: string): string
+	export function decode(str: string, decodeURI?: boolean): string
 }
 
 export = JSONPointers;

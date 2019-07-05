@@ -1,10 +1,10 @@
 import AbsolutePointer from './AbsolutePointer.mjs';
 import RelativePointer from './RelativePointer.mjs';
-import { escape, unescape } from './shared.mjs';
+import { encode, decode } from './tilda.mjs';
 
 export {
 	AbsolutePointer,
 	RelativePointer,
-	escape,
-	unescape
+	encode,
+	decode
 };

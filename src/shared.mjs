@@ -1,103 +1,6 @@
+import { encode, decode } from './tilda.mjs';
+
 const hasOwnProperty = Object.prototype.hasOwnProperty;
-
-const escapeMap =
-{
-	'~' : '~0',
-	'/' : '~1'
-};
-
-const unescapeMap =
-{
-	'0' : '~',
-	'1' : '/'
-};
-
-/**
- * tilda-escapes the string
- * @param {string} str string to escape
- * @returns {string} the escaped string
- */
-export function escape(str)
-{
-	const length = str.length;
-
-	let anchor = 0;
-	let offset = 0;
-	let result = '';
-
-	while (offset < length)
-	{
-		const sequence = escapeMap[str[offset]];
-		if (sequence)
-		{
-			if (anchor !== offset)
-			{
-				result += str.slice(anchor, offset);
-			}
-
-			result += sequence;
-			anchor = offset + 1;
-		}
-		++offset;
-	}
-
-	return anchor === length
-		? result
-		: result + str.slice(anchor);
-}
-
-/**
- * unescapes a tilda-escaped string
- * @param {string} str string to unescape
- * @returns {string} the unescaped string
- * @throws Will throw on invalid tilda-escape sequence
- */
-export function unescape(str)
-{
-	const length = str.length;
-
-	let anchor = 0;
-	let offset = 0;
-	let result = '';
-	let isNumeric = true;
-
-	while (offset < length)
-	{
-		const charCode = str.charCodeAt(offset);
-		if (charCode === 126) // '~' = 126
-		{
-			const ctrl = offset + 1;
-			const char = ctrl < length && unescapeMap[str[ctrl]];
-			if (!char)
-			{
-				throw new Error(`invalid tilda-escape sequence '~${str[ctrl] || 'EOL'}'`);
-			}
-
-			if (anchor !== offset)
-			{
-				result += str.slice(anchor, offset);
-			}
-
-			result += char;
-			anchor = ctrl + 1;
-		}
-
-		isNumeric = isNumeric && isNumber(charCode);
-		++offset;
-	}
-
-	if (anchor !== length)
-	{
-		result += str.slice(anchor);
-	}
-
-	return isNumeric ? Number(result) : result;
-}
-
-export function isNumber(charCode)
-{
-	return charCode >= 48 && charCode <= 57; // '0' = 48, '9' = 57
-}
 
 export function stringify(path)
 {
@@ -107,13 +10,13 @@ export function stringify(path)
 	for (let i = 0; i < length; ++i)
 	{
 		const segment = path[i];
-		result += '/' + escape(typeof segment === 'number' ? segment.toFixed(0) : segment);
+		result += '/' + encode(typeof segment === 'number' ? segment.toFixed(0) : segment);
 	}
 
 	return result;
 }
 
-export function parse(str, offset = 0)
+export function parse(str, offset, decodeURI)
 {
 	const path = [];
 	const length = str.length;
@@ -125,7 +28,7 @@ export function parse(str, offset = 0)
 		{
 			if (anchor !== i)
 			{
-				path.push(unescape(str.slice(anchor, i)));
+				path.push(decode(str.slice(anchor, i), decodeURI));
 			}
 			anchor = i + 1;
 		}

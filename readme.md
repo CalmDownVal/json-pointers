@@ -12,7 +12,7 @@ npm i --save @calmdownval/json-pointers
 - both absolute and relative pointers are available
 - relative pointers support referencing of array indexes and object keys
 - parse and toString methods provided
-- escapes and unescapes tilda sequences (`~0`, `~1`)
+- encodes and decodes tilda sequences (`~0`, `~1`)
 - can convert between absolute and relative pointers
 - includes tests
 

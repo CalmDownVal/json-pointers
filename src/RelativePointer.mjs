@@ -1,5 +1,6 @@
 import AbsolutePointer from './AbsolutePointer.mjs';
-import { traverse, stringify, isNumber, parse } from './shared.mjs';
+import { traverse, stringify, parse } from './shared.mjs';
+import { isNumber } from './tilda.mjs';
 
 /**
  * Represents a relative JSON Pointer
@@ -91,10 +92,11 @@ export default class RelativePointer
 	/**
 	 * Parses a string as a relative JSON pointer into a new instance of RelativePointer.
 	 * @param {string} str the string to parse
+	 * @param {boolean} decodeURI whether to decode URI encoding
 	 * @returns {RelativePointer} the parsed pointer
 	 * @throws Will throw if the string is not a valid relative JSON pointer.
 	 */
-	static parse(str)
+	static parse(str, decodeURI = false)
 	{
 		const length = str.length;
 
@@ -113,6 +115,6 @@ export default class RelativePointer
 
 		return new RelativePointer(
 			Number(str.slice(0, index)),
-			charCode === 35 ? null : parse(str, index));
+			charCode === 35 ? null : parse(str, index, decodeURI));
 	}
 }
